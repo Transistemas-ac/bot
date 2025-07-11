@@ -19,10 +19,16 @@ const client = new Client({
 
 const WELCOME_CHANNEL_ID = process.env.WELCOME_CHANNEL_ID;
 const ROLE_CHANNEL_ID = process.env.ROLE_CHANNEL_ID;
+const REGLAS_CHANNEL_ID = process.env.REGLAS_CHANNEL_ID;
+const PRESENTACION_CHANNEL_ID = process.env.PRESENTACION_CHANNEL_ID;
+const ROLES_CHANNEL_ID = process.env.ROLES_CHANNEL_ID;
 let ROLE_MESSAGE_ID = process.env.ROLE_MESSAGE_ID;
+
 const ROLES = {
-  "🟦": process.env.ROLE_ID_AZUL,
-  "🟥": process.env.ROLE_ID_ROJO,
+  "💛 ": process.env.ROLE_ID_ESTUDIANTE,
+  "💜": process.env.ROLE_ID_PROFE,
+  "❤️": process.env.ROLE_ID_VOLUNTARIE,
+  "🧡": process.env.ROLE_ID_COMUNIDAD,
 };
 
 client.once(Events.ClientReady, () => {
@@ -32,7 +38,11 @@ client.once(Events.ClientReady, () => {
 client.on(Events.GuildMemberAdd, async (member) => {
   const channel = member.guild.channels.cache.get(WELCOME_CHANNEL_ID);
   if (!channel?.isTextBased()) return;
-  await channel.send(`¡Bienvenido, <@${member.id}>!`);
+  await channel.send(
+    `Hola <@${member.id}>, bienvenide/a/o a Transistemas Comunidad! 🏳️‍⚧️🏳️‍🌈\n
+- Te pedimos que leas <#${REGLAS_CHANNEL_ID}> y reacciones a tu rol como integrante de nuestra comunidad en <#${ROLES_CHANNEL_ID}>.\n
+- También podés presentarte en <#${PRESENTACION_CHANNEL_ID}>, personalizar tu apodo y agregar tus pronombres en tu perfil para que estén visibles para toda la comunidad 🌈`
+  );
 });
 
 async function initRoleMessage() {
