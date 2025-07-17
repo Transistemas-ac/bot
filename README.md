@@ -81,9 +81,15 @@ Una vez configurado todo, iniciá el bot:
 npm start
 ```
 
-### 5️⃣ Mantener online
+### 5️⃣ Agregar al server
 
-Para mantener el bot online en el server hay que hacer deploy a algún servicio, por ejemplo Railway.
+https://discord.com/oauth2/authorize?client_id=1392696789810810941&permissions=334745152&integration_type=0&scope=bot+applications.commands
+
+### ☁️ Mantener online
+
+El bot dejara de estar online en el momento que cierres la consola.
+Para mantener el bot online en el server 24/7 ⏰ es recomendable desplegarlo en plataformas como Railway o Render. Estas opciones aseguran que el bot se reinicie automáticamente si falla y lo mantienen accesible sin necesidad de tener tu computadora encendida.
+Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos casos es recomendable usar Docker y pm2.
 
 ---
 

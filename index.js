@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { client } from "./config.js";
-import { initRoleMessage } from "./messages/roles.js";
-import { initRulesMessage } from "./messages/rules.js";
-import { registerEvents } from "./events/index.js";
+import { client } from "./src/config.js";
+import { initRoleMessage } from "./src/messages/roles.js";
+import { initRulesMessage } from "./src/messages/rules.js";
+import { registerEvents } from "./src/events/index.js";
 
 client.once("ready", async () => {
   await initRoleMessage(client, process.env.CHANNEL_ID_ROLES);
