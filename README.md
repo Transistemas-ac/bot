@@ -28,8 +28,8 @@ Seguí estos pasos para desplegar y ejecutar el bot:
 ### 1️⃣ Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/nombre-del-repo-del-bot.git
-cd nombre-del-repo-del-bot
+git clone https://github.com/Transistemas-ac/discord-bot/
+cd discord-bot
 ```
 
 ### 2️⃣ Instalar Dependencias
