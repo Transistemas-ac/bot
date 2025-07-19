@@ -1,3 +1,5 @@
+<img src="https://media.licdn.com/dms/image/v2/C4D1BAQH5hQZv-eURBQ/company-background_10000/company-background_10000/0/1651403486413/transistemasok_cover?e=1753549200&v=beta&t=46LSZJkAlfV0gju00kMCLIYWlB8SbQhdu4Nn4x5gjGQ"></img>
+
 # 🤖 Discord Bot
 
 ¡Bienvenide al repositorio del bot oficial de **Transistemas Comunidad**! Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
