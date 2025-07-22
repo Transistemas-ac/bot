@@ -34,7 +34,7 @@ export async function onMessageCreate(message) {
     .filter((msg) => Date.now() - msg.timestamp < SPAM_TIME_WINDOW);
   const isRepetitiveSpam = spamInstances.length >= SPAM_THRESHOLD;
 
-  if (isSpamKeyword || isRepetitiveSpam) {
+  if (isSpamKeyword && isRepetitiveSpam) {
     try {
       await message.delete();
       console.log(
