@@ -22,7 +22,7 @@ export async function onGuildMemberAdd(member) {
     .send(
       `Hola <@${member.id}>, bienvenide/a/o a Transistemas Comunidad! 🏳️‍⚧️🏳️‍🌈\n\n` +
         `Para obtener acceso completo al servidor, por favor lee las <#${process.env.CHANNEL_ID_REGLAS}> y reacciona con ✅ al mensaje de reglas para confirmar que las has leído y aceptado.\n\n` +
-        `Una vez verificado, podrás seleccionar tu rol en <#${process.env.CHANNEL_ID_ROLES}> y presentarte en <#${process.env.CHANNEL_ID_PRESENTACION}>.`
+        `Una vez verificadx, podrás seleccionar tu rol en <#${process.env.CHANNEL_ID_ROLES}> y presentarte en <#${process.env.CHANNEL_ID_PRESENTACION}>.`
     )
     .catch(console.error);
 }
