@@ -100,7 +100,4 @@ Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos caso
 <br>
 
 ---
-
-<br>
-
 🌈 Creado con orgullo por el Equipo de Desarrollo de Transistemas ♥
