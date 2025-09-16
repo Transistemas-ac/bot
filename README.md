@@ -1,10 +1,8 @@
-<img src="https://media.licdn.com/dms/image/v2/C4D1BAQH5hQZv-eURBQ/company-background_10000/company-background_10000/0/1651403486413/transistemasok_cover?e=1753549200&v=beta&t=46LSZJkAlfV0gju00kMCLIYWlB8SbQhdu4Nn4x5gjGQ"></img>
-
 # 🤖 Discord Bot
 
 ¡Bienvenide al repositorio del bot oficial de **Transistemas Comunidad**! Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
 
----
+<br>
 
 ## ✨ Funcionalidades Destacadas
 
@@ -21,7 +19,7 @@ Este bot ofrece una serie de características clave para mantener nuestra comuni
   - **Detección de Mensajes Repetitivos**: Identifica y elimina mensajes idénticos enviados en un corto período de tiempo por diferentes usuarios o en múltiples canales.
   - **Notificaciones de Spam (Webhook)**: Si se configura, envía alertas a un webhook específico cada vez que se detecta y elimina un mensaje de spam, facilitando la moderación.
 
-<br></br>
+<br>
 
 ## 🚀 Cómo correr el bot
 
@@ -33,6 +31,7 @@ Seguí estos pasos para desplegar y ejecutar el bot:
 git clone https://github.com/Transistemas-ac/discord-bot/
 cd discord-bot
 ```
+<br>
 
 ### 2️⃣ Instalar Dependencias
 
@@ -41,6 +40,7 @@ Asegurate de tener **Node.js** instalado. Luego, instala las dependencias del pr
 ```bash
 npm install
 ```
+<br>
 
 ### 3️⃣ Crear el archivo `.env`
 
@@ -74,6 +74,7 @@ MESSAGE_ID_ROLES=
 MESSAGE_ID_REGLAS=
 
 ```
+<br>
 
 ### 4️⃣ Ejecutar el Bot
 
@@ -82,12 +83,15 @@ Una vez configurado todo, iniciá el bot:
 ```bash
 npm start
 ```
+<br>
 
 ### 5️⃣ Agregar al server
 
 https://discord.com/oauth2/authorize?client_id=1392696789810810941&permissions=334745152&integration_type=0&scope=bot+applications.commands
 
-### ☁️ Mantener online
+<br>
+
+## ☁️ Mantener online
 
 El bot dejara de estar online en el momento que cierres la consola.
 Para mantener el bot online en el server 24/7 ⏰ es recomendable desplegarlo en plataformas como Railway o Render. Estas opciones aseguran que el bot se reinicie automáticamente si falla y lo mantienen accesible sin necesidad de tener tu computadora encendida.
@@ -96,4 +100,5 @@ Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos caso
 ---
 
 <br>
-Creado con orgullo por el Equipo de Desarrollo de Transistemas
+
+🌈 Creado con orgullo por el Equipo de Desarrollo de Transistemas ♥
