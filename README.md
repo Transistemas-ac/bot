@@ -1,6 +1,6 @@
-# 🤖 Discord Bot
+# 🤖 Transistemas Discord Bot
 
-¡Bienvenide al repositorio del bot oficial de **Transistemas Comunidad**! Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
+Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
 
 <br>
 
