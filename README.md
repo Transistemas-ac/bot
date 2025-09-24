@@ -1,4 +1,4 @@
-# 🤖 Transistemas Discord Bot
+# 🐱 Transis Bot
 
 Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
 
