@@ -85,9 +85,7 @@ npm start
 ```
 <br>
 
-### 5️⃣ Agregar al server
-
-https://discord.com/oauth2/authorize?client_id=1392696789810810941&permissions=334745152&integration_type=0&scope=bot+applications.commands
+### <a href="https://discord.com/oauth2/authorize?client_id=1392696789810810941&permissions=334745152&integration_type=0&scope=bot+applications.commands">5️⃣ Agregar al server</a>
 
 <br>
 
