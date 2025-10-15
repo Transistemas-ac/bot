@@ -15,10 +15,14 @@ const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
 
 async function registerCommands() {
   try {
-    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-      body: commands,
-    });
-    console.log("✅ Comandos registrados correctamente.");
+    await rest.put(
+      Routes.applicationGuildCommands(
+        process.env.CLIENT_ID,
+        process.env.GUILD_ID // 👈 ID del servidor donde querés registrar los comandos
+      ),
+      { body: commands }
+    );
+    console.log("✅ Comandos registrados en el servidor correctamente.");
   } catch (error) {
     console.error("❌ Error al registrar comandos:", error);
   }
