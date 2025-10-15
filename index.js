@@ -18,32 +18,32 @@ async function registerCommands() {
     await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
-        process.env.GUILD_ID // 👈 ID del servidor donde querés registrar los comandos
+        process.env.GUILD_ID
       ),
       { body: commands }
     );
-    console.log("✅ Comandos registrados en el servidor correctamente.");
+    console.log("✅ Comandos registrados correctamente en el servidor.");
   } catch (error) {
     console.error("❌ Error al registrar comandos:", error);
   }
 }
 
-client.once("ready", async () => {
+client.once("clientReady", async () => {
+  console.log(`🚀 ${client.user.tag} está en línea!`);
+
+  await registerCommands();
   await initRoleMessage(client, process.env.CHANNEL_ID_ROLES);
   await initRulesMessage(client, process.env.CHANNEL_ID_REGLAS);
-  console.log(`🚀 ${client.user.tag} está en línea!`);
 });
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
-
   if (interaction.commandName === "ping") {
     await interaction.reply("🏓 Pong!");
   }
 });
 
 registerEvents(client);
-await registerCommands();
 
 client.login(process.env.BOT_TOKEN).catch(() => {
   console.error(
