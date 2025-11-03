@@ -51,7 +51,6 @@ export async function onMessageCreate(message) {
         const msgToDelete = await channel.messages.fetch(msgData.messageId);
         await msgToDelete.delete();
       } catch (err) {
-        // estos "Unknown Message" son normales si otro evento lo borró antes
         failedDeletions.push({
           channel: msgData.channel,
           messageId: msgData.messageId,
@@ -71,7 +70,6 @@ export async function onMessageCreate(message) {
         } mensajes, ${failedDeletions.length} no se pudieron eliminar.`
       );
       for (const fail of failedDeletions) {
-        // log más limpio y con contexto
         console.warn(
           `⚠️ No se pudo eliminar mensaje (${fail.messageId}) en canal (${fail.channel}): ${fail.error}`
         );

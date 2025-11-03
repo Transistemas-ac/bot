@@ -4,7 +4,7 @@ export const SPAM_TIME_WINDOW = 30000;
 export const recentMessages = new Map();
 export const ROLES = {
   "💛": process.env.ROLE_ID_ESTUDIANTE,
-  "💜": process.env.ROLE_ID_PROFE,
-  "❤️": process.env.ROLE_ID_VOLUNTARIE,
-  "🧡": process.env.ROLE_ID_COMUNIDAD,
+  "💙": process.env.ROLE_ID_PROFE,
+  "🩷": process.env.ROLE_ID_VOLUNTARIE,
+  "💜": process.env.ROLE_ID_COMUNIDAD,
 };
