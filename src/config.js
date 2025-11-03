@@ -7,6 +7,7 @@ export const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessages, // 👈 NECESARIO para DMs
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
