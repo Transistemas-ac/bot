@@ -4,7 +4,7 @@ Este bot de Discord está diseñado para automatizar y mejorar la gestión de nu
 
 <br>
 
-## ✨ Funcionalidades Destacadas
+## ✨ Funcionalidades
 
 Este bot ofrece una serie de características clave para mantener nuestra comunidad organizada y segura:
 
