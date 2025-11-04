@@ -14,10 +14,7 @@ Este bot ofrece una serie de características clave para mantener nuestra comuni
 
 - **🎭 Auto-Asignación de Roles**: En el canal de roles (`#roles`), los miembros pueden seleccionar y asignarse roles por sí mismos reaccionando a un mensaje interactivo, lo que permite una personalización rápida y sencilla de su perfil.
 
-- **🚫 Detección y Eliminación de Spam**:
-  - **Filtrado por Palabras Clave**: Monitorea los mensajes en busca de palabras clave de spam configurables (ej. "nitro", "gratis", "link").
-  - **Detección de Mensajes Repetitivos**: Identifica y elimina mensajes idénticos enviados en un corto período de tiempo por diferentes usuarios o en múltiples canales.
-  - **Notificaciones de Spam (Webhook)**: Si se configura, envía alertas a un webhook específico cada vez que se detecta y elimina un mensaje de spam, facilitando la moderación.
+- **🚫 Detección y Eliminación de Spam**: Identifica y elimina mensajes idénticos enviados en un corto período de tiempo por un mismo usuarie en múltiples canales.
 
 <br>
 
