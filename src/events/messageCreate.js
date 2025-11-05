@@ -17,6 +17,8 @@ export async function onMessageCreate(message) {
     channel: message.channel.id,
     messageId: message.id,
     timestamp: Date.now(),
+    deleted: false,
+    notified: false,
   });
 
   recentMessages.set(
@@ -36,8 +38,11 @@ export async function onMessageCreate(message) {
 
   if (isRepetitiveSpam) {
     const failedDeletions = [];
+    let deletedCount = 0;
 
     for (const msgData of userSpamInstances) {
+      if (msgData.deleted) continue;
+
       try {
         const channel = await message.client.channels.fetch(msgData.channel);
         if (!channel) {
@@ -50,6 +55,8 @@ export async function onMessageCreate(message) {
         }
         const msgToDelete = await channel.messages.fetch(msgData.messageId);
         await msgToDelete.delete();
+        msgData.deleted = true;
+        deletedCount++;
       } catch (err) {
         failedDeletions.push({
           channel: msgData.channel,
@@ -59,51 +66,59 @@ export async function onMessageCreate(message) {
       }
     }
 
+    const alreadyNotified = userSpamInstances.some((m) => m.notified === true);
+
+    if (!alreadyNotified && deletedCount > 0 && process.env.CHANNEL_ID_ADMINS) {
+      try {
+        const adminChannel = await message.client.channels.fetch(
+          process.env.CHANNEL_ID_ADMINS
+        );
+        if (adminChannel && adminChannel.isTextBased()) {
+          await adminChannel.send({
+            embeds: [
+              new EmbedBuilder()
+                .setTitle("🚫 Ataque de spam detectado")
+                .setColor("#FF0000")
+                .addFields(
+                  { name: "User", value: `@${message.author.tag}` },
+                  {
+                    name: "Cantidad de mensajes detectados",
+                    value: `${userSpamInstances.length}`,
+                  },
+                  { name: "Eliminados", value: `${deletedCount}` },
+                  {
+                    name: "Contenido repetido",
+                    value: `\`\`\`${message.content}\`\`\``,
+                  }
+                )
+                .setTimestamp(),
+            ],
+          });
+        }
+      } catch (err) {
+        console.error(
+          "❌ No se pudo notificar al canal de admins:",
+          err.message
+        );
+      }
+      for (const msgData of userSpamInstances) {
+        msgData.notified = true;
+      }
+    }
+
     if (failedDeletions.length === 0) {
       console.log(
         `🚫 Mensajes de spam detectados y eliminados de ${message.author.tag}: "${message.content}"`
       );
     } else {
       console.log(
-        `🚫 Spam detectado de ${message.author.tag}. Se eliminaron ${
-          userSpamInstances.length - failedDeletions.length
-        } mensajes, ${failedDeletions.length} no se pudieron eliminar.`
+        `🚫 Spam detectado de ${message.author.tag}. Se eliminaron ${deletedCount} mensajes, ${failedDeletions.length} no se pudieron eliminar.`
       );
       for (const fail of failedDeletions) {
         console.warn(
           `⚠️ No se pudo eliminar mensaje (${fail.messageId}) en canal (${fail.channel}): ${fail.error}`
         );
       }
-    }
-
-    if (process.env.SPAM_WEBHOOK_URL) {
-      const embed = new EmbedBuilder()
-        .setTitle("🚫 Spam Repetido Detectado")
-        .setDescription(
-          `Se detectaron mensajes iguales del mismo usuario en múltiples canales dentro de la ventana de tiempo.`
-        )
-        .setColor("#FF0000")
-        .addFields(
-          { name: "Usuario", value: `<@${message.author.id}>` },
-          { name: "Contenido", value: `\`\`\`${message.content}\`\`\`` },
-          {
-            name: "Eliminados",
-            value: `${userSpamInstances.length - failedDeletions.length}`,
-          },
-          {
-            name: "Fallidos",
-            value: `${failedDeletions.length}`,
-          }
-        )
-        .setTimestamp();
-
-      await fetch(process.env.SPAM_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ embeds: [embed] }),
-      }).catch((err) =>
-        console.error("❌ Error al enviar notificación de spam:", err)
-      );
     }
   }
 }
