@@ -44,31 +44,29 @@ npm install
 Para que el bot funcione correctamente, necesitas configurar las siguientes variables en un archivo `.env` en la raíz de tu proyecto:
 
 ```env
-# Token de tu bot de Discord (¡Mantener secreto!)
-BOT_TOKEN=TU_BOT_TOKEN_AQUI
+# Token del bot de Discord
+BOT_TOKEN
 
 # IDs de los canales de Discord
-CHANNEL_ID_BIENVENIDA=ID_DEL_CANAL_DE_BIENVENIDA
-CHANNEL_ID_REGLAS=ID_DEL_CANAL_DE_REGLAS
-CHANNEL_ID_PRESENTACION=ID_DEL_CANAL_DE_PRESENTACION
-CHANNEL_ID_ROLES=ID_DEL_CANAL_DE_ROLES
+CHANNEL_ID_BIENVENIDA
+CHANNEL_ID_REGLAS
+CHANNEL_ID_PRESENTACION
+CHANNEL_ID_ROLES
+CHANNEL_ID_ADMINS
 
-# ID del rol que se asigna a los usuarios no verificados (si aplica)
+# ID del rol que se asigna a los usuaries no verificades (si aplica)
 ROLE_ID_UNVERIFIED=ID_DEL_ROL_NO_VERIFICADO
 
 # IDs de los roles para auto-asignación
-ROLE_ID_ESTUDIANTE=ID_DEL_ROL_ESTUDIANTE
-ROLE_ID_PROFE=ID_DEL_ROL_PROFE
-ROLE_ID_VOLUNTARIE=ID_DEL_ROL_VOLUNTARIE
-ROLE_ID_COMUNIDAD=ID_DEL_ROL_COMUNIDAD
-
-# Webhook para notificaciones de spam (opcional, pero recomendado)
-SPAM_WEBHOOK_URL=TU_WEBHOOK_URL_PARA_SPAM
+ROLE_ID_ESTUDIANTE
+ROLE_ID_PROFE
+ROLE_ID_VOLUNTARIE
+ROLE_ID_COMUNIDAD
 
 # IDs de mensajes persistentes (se guardan automáticamente la primera vez que el bot los crea)
 # No necesitas establecer estos valores manualmente al inicio, el bot los generará.
-MESSAGE_ID_ROLES=
-MESSAGE_ID_REGLAS=
+MESSAGE_ID_ROLES
+MESSAGE_ID_REGLAS
 
 ```
 <br>
