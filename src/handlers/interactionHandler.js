@@ -16,7 +16,7 @@ export async function handleInteraction(interaction) {
         } else if (!interaction.replied) {
           await interaction.reply({
             content: "❌ Hubo un error al procesar este botón.",
-            ephemeral: true,
+            flags: 64,
           });
         }
       } catch (replyError) {
@@ -51,12 +51,12 @@ export async function handleInteraction(interaction) {
       } else if (interaction.replied) {
         await interaction.followUp({
           content: "❌ Hubo un error al ejecutar este comando.",
-          ephemeral: true,
+          flags: 64,
         });
       } else {
         await interaction.reply({
           content: "❌ Hubo un error al ejecutar este comando.",
-          ephemeral: true,
+          flags: 64,
         });
       }
     } catch (replyError) {

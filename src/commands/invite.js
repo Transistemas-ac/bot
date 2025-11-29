@@ -22,18 +22,18 @@ export const inviteCommand = {
     const adminRoleId = process.env.ROLE_ID_ADMIN;
     const member = interaction.member;
 
-    // Validación de permisos sin defer
+    // Validación de permisos
     if (!member || !member.roles || !member.roles.cache.has(adminRoleId)) {
       await interaction.reply({
         content: "❌ Solo admins pueden usar este comando.",
-        ephemeral: true,
+        flags: 64, // ephemeral
       });
       return;
     }
 
     const days = interaction.options.getInteger("dias");
 
-    // Si NO especificó días, mostrar botones SIN defer
+    // Si NO especificó días, mostrar botones
     if (!days) {
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
@@ -54,18 +54,17 @@ export const inviteCommand = {
           .setStyle(ButtonStyle.Primary)
       );
 
-      // Reply directo, no defer
       await interaction.reply({
         content: "Elegí por cuánto tiempo querés que la URL sea válida:",
         components: [row],
-        ephemeral: true,
+        flags: 64, // ephemeral
       });
 
       return;
     }
 
     // Si especificó días, hacer defer porque haremos fetch
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     try {
       const ttlSeconds = days * 24 * 60 * 60;
@@ -102,8 +101,17 @@ export const inviteCommand = {
       )}`;
       const label = days === 1 ? "1 día" : `${days} días`;
 
+      // Botón de copiar
+      const copyButton = new ButtonBuilder()
+        .setCustomId(`copy_url_${body.token}`)
+        .setLabel("📋 Copiar URL")
+        .setStyle(ButtonStyle.Secondary);
+
+      const row = new ActionRowBuilder().addComponents(copyButton);
+
       await interaction.editReply({
-        content: `✅ URL generada (válida ${label}):\n${inviteUrl}`,
+        content: `✅ URL generada (válida ${label}):\n\n${inviteUrl}\n\n`,
+        components: [row],
       });
     } catch (error) {
       console.error("❌ Error ejecutando /invitar:", error);
