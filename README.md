@@ -16,6 +16,8 @@ Este bot ofrece una serie de características clave para mantener nuestra comuni
 
 - **🚫 Detección y Eliminación de Spam**: Identifica y elimina mensajes idénticos enviados en un corto período de tiempo por un mismo usuarie en múltiples canales.
 
+- **🔗 Generación de invitaciones personalizadas para Estudiantes**: El comando `/invitar`, disponible únicamente para admins, envía una petición a <a href="https://github.com/Transistemas-ac/ds-invite">un worker interno</a> que devuelve una URL de invitación al servidor en la que se puede auto-asignar el rol de Estudiante.
+
 <br>
 
 ## 🚀 Cómo correr el bot
@@ -28,6 +30,7 @@ Seguí estos pasos para desplegar y ejecutar el bot:
 git clone https://github.com/Transistemas-ac/discord-bot/
 cd discord-bot
 ```
+
 <br>
 
 ### 2️⃣ Instalar Dependencias
@@ -37,6 +40,7 @@ Asegurate de tener **Node.js** instalado. Luego, instala las dependencias del pr
 ```bash
 npm install
 ```
+
 <br>
 
 ### 3️⃣ Crear el archivo `.env`
@@ -69,6 +73,7 @@ MESSAGE_ID_ROLES
 MESSAGE_ID_REGLAS
 
 ```
+
 <br>
 
 ### 4️⃣ Ejecutar el Bot
@@ -78,6 +83,7 @@ Una vez configurado todo, iniciá el bot:
 ```bash
 npm start
 ```
+
 <br>
 
 ### <a href="https://discord.com/oauth2/authorize?client_id=1392696789810810941&permissions=334745152&integration_type=0&scope=bot+applications.commands">5️⃣ Agregar al server</a>
@@ -93,4 +99,5 @@ Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos caso
 <br>
 
 ---
+
 🌈 Creado con orgullo por el Equipo de Desarrollo de Transistemas ♥
