@@ -27,7 +27,7 @@ export async function onMessageReactionAdd(reaction, user) {
     const unverifiedRole = member.guild.roles.cache.get(
       process.env.ROLE_ID_UNVERIFIED
     );
-    const comunidadRole = member.guild.roles.cache.get(ROLES["🧡"]);
+    const comunidadRole = member.guild.roles.cache.get(ROLES["💜"]);
     if (unverifiedRole && member.roles.cache.has(unverifiedRole.id)) {
       await member.roles.remove(unverifiedRole).catch(console.error);
       console.log(`🔓 Rol no verificado removido de ${user.tag}.`);
