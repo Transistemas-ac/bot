@@ -1,8 +1,10 @@
 import { Events } from "discord.js";
 import { onGuildMemberAdd } from "./guildMemberAdd.js";
 import { onMessageCreate } from "./messageCreate.js";
-import { onMessageReactionAdd } from "./messageReactionAdd.js";
-import { onMessageReactionRemove } from "./messageReactionRemove.js";
+import {
+  onMessageReactionAdd,
+  onMessageReactionRemove,
+} from "./messageReaction.js";
 
 export function registerEvents(client) {
   client.on(Events.GuildMemberAdd, onGuildMemberAdd);
