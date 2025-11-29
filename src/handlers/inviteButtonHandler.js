@@ -1,5 +1,3 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-
 async function generateInvite(days, interaction) {
   const ttlSeconds = days * 24 * 60 * 60;
 
@@ -35,17 +33,8 @@ async function generateInvite(days, interaction) {
   )}`;
   const label = days === 1 ? "1 día" : `${days} días`;
 
-  // Botón de copiar
-  const copyButton = new ButtonBuilder()
-    .setCustomId(`copy_url_${body.token}`)
-    .setLabel("📋 Copiar URL")
-    .setStyle(ButtonStyle.Secondary);
-
-  const row = new ActionRowBuilder().addComponents(copyButton);
-
   await interaction.editReply({
-    content: `✅ URL generada (válida ${label}):\n\n${inviteUrl}`,
-    components: [row],
+    content: `✅ URL generada (válida por ${label}):\n\`\`\`${inviteUrl}\`\`\``,
   });
 }
 
@@ -56,21 +45,6 @@ export const inviteButtonHandler = {
     if (!interaction.isButton()) return;
 
     const id = interaction.customId;
-
-    // Manejar botón de copiar (respuesta inmediata, sin defer)
-    if (id.startsWith("copy_url_")) {
-      const token = id.replace("copy_url_", "");
-      const inviteUrl = `https://ds.transistemas.org/?token=${encodeURIComponent(
-        token
-      )}`;
-
-      await interaction.reply({
-        content: `📋 URL copiada:\n\`\`\`${inviteUrl}\`\`\`\nSeleccioná el texto de arriba y copialo (Discord no permite copiar automáticamente).`,
-        flags: 64, // ephemeral
-      });
-      return;
-    }
-
     if (!id.startsWith("invite_")) return;
 
     // Defer porque haremos fetch

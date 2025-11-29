@@ -101,17 +101,8 @@ export const inviteCommand = {
       )}`;
       const label = days === 1 ? "1 día" : `${days} días`;
 
-      // Botón de copiar
-      const copyButton = new ButtonBuilder()
-        .setCustomId(`copy_url_${body.token}`)
-        .setLabel("📋 Copiar URL")
-        .setStyle(ButtonStyle.Secondary);
-
-      const row = new ActionRowBuilder().addComponents(copyButton);
-
       await interaction.editReply({
-        content: `✅ URL generada (válida ${label}):\n\n${inviteUrl}\n\n`,
-        components: [row],
+        content: `✅ URL generada (válida por ${label}):\n\`\`\`${inviteUrl}\`\`\``,
       });
     } catch (error) {
       console.error("❌ Error ejecutando /invitar:", error);

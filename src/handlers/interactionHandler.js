@@ -1,5 +1,5 @@
 import { commandsMap } from "../commands/index.js";
-import { inviteButtonHandler } from "./buttonInviteHandler.js";
+import { inviteButtonHandler } from "./inviteButtonHandler.js";
 
 export async function handleInteraction(interaction) {
   if (interaction.isButton()) {
