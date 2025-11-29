@@ -7,26 +7,23 @@ async function generateInvite(days, interaction) {
       `https://ds.transistemas.org/hash?ttl=${ttlSeconds}`
     );
   } catch {
-    await interaction.reply({
-      content: "Error al contactar el servicio.",
-      ephemeral: true,
+    await interaction.editReply({
+      content: "❌ Error al contactar el servicio.",
     });
     return;
   }
 
   if (!response.ok) {
-    await interaction.reply({
-      content: "El servicio respondió con un error.",
-      ephemeral: true,
+    await interaction.editReply({
+      content: "❌ El servicio respondió con un error.",
     });
     return;
   }
 
   const body = await response.json();
   if (!body.token) {
-    await interaction.reply({
-      content: "No pude generar el hash.",
-      ephemeral: true,
+    await interaction.editReply({
+      content: "❌ No pude generar el hash.",
     });
     return;
   }
@@ -36,23 +33,49 @@ async function generateInvite(days, interaction) {
   )}`;
   const label = days === 1 ? "1 día" : `${days} días`;
 
-  await interaction.reply({
-    content: `URL generada (válida ${label}):\n${inviteUrl}`,
-    ephemeral: true,
+  await interaction.editReply({
+    content: `✅ URL generada (válida ${label}):\n${inviteUrl}`,
   });
 }
 
-module.exports = {
+export const inviteButtonHandler = {
   name: "inviteButtons",
 
   async execute(interaction) {
     if (!interaction.isButton()) return;
 
     const id = interaction.customId;
+    if (!id.startsWith("invite_")) return;
 
-    if (id.startsWith("invite_")) {
-      const days = parseInt(id.split("_")[1], 10);
+    // CRÍTICO: Defer INMEDIATAMENTE (antes de 3 segundos)
+    await interaction.deferReply({ ephemeral: true });
+
+    const adminRoleId = process.env.ROLE_ID_ADMIN;
+    const member = interaction.member;
+
+    // Validación de permisos
+    if (!member || !member.roles || !member.roles.cache.has(adminRoleId)) {
+      await interaction.editReply({
+        content: "❌ Solo admins pueden usar estos botones.",
+      });
+      return;
+    }
+
+    const days = parseInt(id.split("_")[1], 10);
+    if (!Number.isFinite(days) || days <= 0) {
+      await interaction.editReply({
+        content: "❌ El botón no tiene un valor de días válido.",
+      });
+      return;
+    }
+
+    try {
       await generateInvite(days, interaction);
+    } catch (error) {
+      console.error("❌ Error ejecutando botón invite_*:", error);
+      await interaction.editReply({
+        content: "❌ Hubo un error al ejecutar este botón.",
+      });
     }
   },
 };

@@ -1,6 +1,34 @@
 import { commandsMap } from "../commands/index.js";
+import { inviteButtonHandler } from "./buttonInviteHandler.js";
 
 export async function handleInteraction(interaction) {
+  if (interaction.isButton()) {
+    try {
+      await inviteButtonHandler.execute(interaction);
+    } catch (error) {
+      console.error(`❌ Error en button handler:`, error);
+
+      try {
+        if (interaction.deferred) {
+          await interaction.editReply({
+            content: "❌ Hubo un error al procesar este botón.",
+          });
+        } else if (!interaction.replied) {
+          await interaction.reply({
+            content: "❌ Hubo un error al procesar este botón.",
+            ephemeral: true,
+          });
+        }
+      } catch (replyError) {
+        console.error(
+          `❌ No se pudo responder al error del botón:`,
+          replyError
+        );
+      }
+    }
+    return;
+  }
+
   if (!interaction.isCommand()) return;
 
   const command = commandsMap.get(interaction.commandName);
@@ -15,15 +43,24 @@ export async function handleInteraction(interaction) {
   } catch (error) {
     console.error(`❌ Error ejecutando ${interaction.commandName}:`, error);
 
-    const errorMessage = {
-      content: "❌ Hubo un error al ejecutar este comando.",
-      ephemeral: true,
-    };
-
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp(errorMessage);
-    } else {
-      await interaction.reply(errorMessage);
+    try {
+      if (interaction.deferred) {
+        await interaction.editReply({
+          content: "❌ Hubo un error al ejecutar este comando.",
+        });
+      } else if (interaction.replied) {
+        await interaction.followUp({
+          content: "❌ Hubo un error al ejecutar este comando.",
+          ephemeral: true,
+        });
+      } else {
+        await interaction.reply({
+          content: "❌ Hubo un error al ejecutar este comando.",
+          ephemeral: true,
+        });
+      }
+    } catch (replyError) {
+      console.error(`❌ No se pudo responder al error:`, replyError);
     }
   }
 }
