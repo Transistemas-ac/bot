@@ -38,10 +38,14 @@ async function handleReaction(reaction, user, isAdding) {
 
     if (isAdding) {
       await member.roles.add(roleId).catch(console.error);
-      console.log(`➕ Rol ${reaction.emoji.name} añadido a ${user.tag}.`);
+      console.log(
+        `➕ Rol ${reaction.emoji.name} ${roleId} añadido a ${user.tag}.`
+      );
     } else {
       await member.roles.remove(roleId).catch(console.error);
-      console.log(`➖ Rol ${reaction.emoji.name} removido de ${user.tag}.`);
+      console.log(
+        `➖ Rol ${reaction.emoji.name} ${roleId} removido de ${user.tag}.`
+      );
     }
     return;
   }
