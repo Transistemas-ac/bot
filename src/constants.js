@@ -15,29 +15,26 @@ export const ROLES_PRONOMBRES = {
   "💜": process.env.ROLE_ID_ELLE,
 };
 
+//Máximo 20 roles por limitación de Discord en reacciones por mensaje
 export const ROLES_HABILIDADES = {
   "💻": process.env.ROLE_ID_FRONTEND,
   "🖥️": process.env.ROLE_ID_BACKEND,
   "📱": process.env.ROLE_ID_MOBILE,
   "🧪": process.env.ROLE_ID_TESTING,
-  "🔍": process.env.ROLE_ID_QA,
   "🎨": process.env.ROLE_ID_DISENIO,
   "✨": process.env.ROLE_ID_UXUI,
   "📣": process.env.ROLE_ID_COMUNICACION,
   "📁": process.env.ROLE_ID_BD,
   "🎮": process.env.ROLE_ID_GAMEDEV,
   "☁️": process.env.ROLE_ID_CLOUD,
-  "⚙️": process.env.ROLE_ID_DEVOPS,
   "🛠️": process.env.ROLE_ID_SYSADMIN,
   "🤖": process.env.ROLE_ID_DATASCIENCE,
   "🛡️": process.env.ROLE_ID_CIBERSEGURIDAD,
-  "📈": process.env.ROLE_ID_MANAGEMENT,
   "🧰": process.env.ROLE_ID_SOPORTE_IT,
   "⚖️": process.env.ROLE_ID_DERECHO,
   "🩺": process.env.ROLE_ID_MEDICINA,
   "🧠": process.env.ROLE_ID_PSICOLOGIA,
   "🤝": process.env.ROLE_ID_TRABAJO_SOCIAL,
-  "📢": process.env.ROLE_ID_MARKETING,
   "📚": process.env.ROLE_ID_EDUCACION,
   "🎭": process.env.ROLE_ID_ARTE,
 };
