@@ -5,7 +5,7 @@ export async function onGuildMemberAdd(member) {
   if (unverifiedRole) {
     await member.roles.add(unverifiedRole).catch(console.error);
     console.log(
-      `🔒 ${member.user.tag} se unió y se le asignó el rol no verificado.`
+      `🔒 ${member.user.tag} se unió y se le asignó el rol "Sin Verificar"`
     );
   } else {
     const comunidadRoleId = process.env.ROLE_ID_COMUNIDAD;

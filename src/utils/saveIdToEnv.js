@@ -1,6 +1,9 @@
 import fs from "fs";
 
-export let MESSAGE_ID_ROLES = process.env.MESSAGE_ID_ROLES;
+export let MESSAGE_ID_ROLES_PRONOMBRES =
+  process.env.MESSAGE_ID_ROLES_PRONOMBRES;
+export let MESSAGE_ID_ROLES_HABILIDADES =
+  process.env.MESSAGE_ID_ROLES_HABILIDADES;
 export let MESSAGE_ID_REGLAS = process.env.MESSAGE_ID_REGLAS;
 
 export function saveIdToEnv(key, id) {
@@ -15,6 +18,7 @@ export function saveIdToEnv(key, id) {
     );
   }
   fs.writeFileSync(envPath, envContent);
-  if (key === "MESSAGE_ID_ROLES") MESSAGE_ID_ROLES = id;
+  if (key === "MESSAGE_ID_ROLES_PRONOMBRES") MESSAGE_ID_ROLES_PRONOMBRES = id;
+  if (key === "MESSAGE_ID_ROLES_HABILIDADES") MESSAGE_ID_ROLES_HABILIDADES = id;
   if (key === "MESSAGE_ID_REGLAS") MESSAGE_ID_REGLAS = id;
 }

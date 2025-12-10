@@ -1,5 +1,13 @@
-import { ROLES, VERIFICATION_EMOJI } from "../constants.js";
-import { MESSAGE_ID_ROLES, MESSAGE_ID_REGLAS } from "../utils.js";
+import {
+  ROLES_PRONOMBRES,
+  ROLES_HABILIDADES,
+  VERIFICATION_EMOJI,
+} from "../constants.js";
+import {
+  MESSAGE_ID_ROLES_PRONOMBRES,
+  MESSAGE_ID_ROLES_HABILIDADES,
+  MESSAGE_ID_REGLAS,
+} from "../utils/saveIdToEnv.js";
 
 async function handleReaction(reaction, user, isAdding) {
   if (user.bot) return;
@@ -10,8 +18,22 @@ async function handleReaction(reaction, user, isAdding) {
   if (!member) return;
 
   // Manejo de roles por emojis
-  if (reaction.message.id === MESSAGE_ID_ROLES) {
-    const roleId = ROLES[reaction.emoji.name];
+  if (reaction.message.id === MESSAGE_ID_ROLES_PRONOMBRES) {
+    const roleId = ROLES_PRONOMBRES[reaction.emoji.name];
+    if (!roleId) return;
+
+    if (isAdding) {
+      await member.roles.add(roleId).catch(console.error);
+      console.log(`➕ Rol ${reaction.emoji.name} añadido a ${user.tag}.`);
+    } else {
+      await member.roles.remove(roleId).catch(console.error);
+      console.log(`➖ Rol ${reaction.emoji.name} removido de ${user.tag}.`);
+    }
+    return;
+  }
+
+  if (reaction.message.id === MESSAGE_ID_ROLES_HABILIDADES) {
+    const roleId = ROLES_HABILIDADES[reaction.emoji.name];
     if (!roleId) return;
 
     if (isAdding) {
@@ -32,7 +54,9 @@ async function handleReaction(reaction, user, isAdding) {
     const unverifiedRole = member.guild.roles.cache.get(
       process.env.ROLE_ID_UNVERIFIED
     );
-    const comunidadRole = member.guild.roles.cache.get(ROLES["💜"]);
+    const comunidadRole = member.guild.roles.cache.get(
+      ROLES_PRONOMBRES["💜"] || ROLES_HABILIDADES["💜"]
+    );
 
     if (isAdding) {
       // Añadir reacción: quitar "sin verificar" y añadir "comunidad"
