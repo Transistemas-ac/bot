@@ -39,6 +39,9 @@ export async function initRoleMessage(client, channelId) {
       await msgPronombres.react(emoji).catch(console.error);
     }
     saveIdToEnv("MESSAGE_ID_ROLES_PRONOMBRES", msgPronombres.id);
+    console.log("📄 Mensaje de roles de pronombres creado.");
+  } else {
+    console.log("✅ Mensaje de roles de pronombres ya existe.");
   }
 
   let msgHabilidades = null;
@@ -72,5 +75,8 @@ export async function initRoleMessage(client, channelId) {
       await msgHabilidades.react(emoji).catch(console.error);
     }
     saveIdToEnv("MESSAGE_ID_ROLES_HABILIDADES", msgHabilidades.id);
+    console.log("📄 Mensaje de roles de habilidades creado.");
+  } else {
+    console.log("✅ Mensaje de roles de habilidades ya existe.");
   }
 }
