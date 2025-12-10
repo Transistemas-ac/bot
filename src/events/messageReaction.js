@@ -67,7 +67,7 @@ async function handleReaction(reaction, user, isAdding) {
       process.env.ROLE_ID_UNVERIFIED
     );
     const comunidadRole = member.guild.roles.cache.get(
-      ROLES_PRONOMBRES["💜"] || ROLES_HABILIDADES["💜"]
+      process.env.ROLE_ID_COMUNIDAD
     );
 
     if (isAdding) {
