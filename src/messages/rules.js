@@ -34,6 +34,6 @@ export async function initRulesMessage(client, channelId) {
     saveIdToEnv("MESSAGE_ID_REGLAS", msg.id);
     console.log("📄 Mensajes de reglas e imágenes enviados.");
   } else {
-    console.log("📄 Mensaje de reglas ya existe.");
+    console.log("✅ Mensaje de reglas ya existe.");
   }
 }
