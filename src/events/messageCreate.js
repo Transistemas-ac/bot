@@ -68,7 +68,33 @@ export async function onMessageCreate(message) {
 
     const alreadyNotified = userSpamInstances.some((m) => m.notified === true);
 
-    if (!alreadyNotified && deletedCount > 0 && process.env.CHANNEL_ID_ADMINS) {
+    if (!alreadyNotified && deletedCount > 0) {
+      const unverifiedRoleId = process.env.ROLE_ID_UNVERIFIED;
+      const member = message.member;
+
+      if (unverifiedRoleId && member) {
+        try {
+          const botClient = message.client;
+          const guild = botClient.guilds.cache.get(message.guildId);
+          if (guild) {
+            const spammerMember = await guild.members.fetch(message.author.id);
+            if (spammerMember) {
+              const currentRoles = spammerMember.roles.cache.filter(
+                (role) => role.id !== message.guildId
+              ).keyArray();
+              if (currentRoles.length > 0) {
+                await spammerMember.roles.remove(currentRoles).catch(console.error);
+              }
+              await spammerMember.roles.add(unverifiedRoleId).catch(console.error);
+              console.log(`🔒 Roles removidos y rol "Sin Verificar" asignado a ${message.author.tag}`);
+            }
+          }
+        } catch (err) {
+          console.error("❌ Error al modificar roles:", err.message);
+        }
+      }
+
+      if (process.env.CHANNEL_ID_ADMINS) {
       try {
         const adminChannel = await message.client.channels.fetch(
           process.env.CHANNEL_ID_ADMINS
