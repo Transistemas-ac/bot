@@ -1,4 +1,12 @@
+const recentlyProcessed = new Set();
+
 export async function onGuildMemberAdd(member) {
+  if (recentlyProcessed.has(member.id)) {
+    console.log(`⏭️  Saltando mensaje de bienvenida duplicado para ${member.user.tag}`);
+    return;
+  }
+  recentlyProcessed.add(member.id);
+  setTimeout(() => recentlyProcessed.delete(member.id), 5000);
   const unverifiedRole = member.guild.roles.cache.get(
     process.env.ROLE_ID_UNVERIFIED
   );
