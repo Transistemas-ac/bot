@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import {
   SPAM_THRESHOLD,
   SPAM_TIME_WINDOW,
-  recentMessages,
+  recentMessages
 } from "../constants.js";
 
 export async function onMessageCreate(message) {
@@ -18,7 +18,7 @@ export async function onMessageCreate(message) {
     messageId: message.id,
     timestamp: Date.now(),
     deleted: false,
-    notified: false,
+    notified: false
   });
 
   recentMessages.set(
@@ -49,7 +49,7 @@ export async function onMessageCreate(message) {
           failedDeletions.push({
             channel: msgData.channel,
             messageId: msgData.messageId,
-            error: "Canal no encontrado",
+            error: "Canal no encontrado"
           });
           continue;
         }
@@ -61,32 +61,37 @@ export async function onMessageCreate(message) {
         failedDeletions.push({
           channel: msgData.channel,
           messageId: msgData.messageId,
-          error: err.message,
+          error: err.message
         });
       }
     }
 
     const alreadyNotified = userSpamInstances.some((m) => m.notified === true);
 
-    if (!alreadyNotified && deletedCount > 0) {
+    if (!alreadyNotified) {
       const unverifiedRoleId = process.env.ROLE_ID_UNVERIFIED;
-      const member = message.member;
 
-      if (unverifiedRoleId && member) {
+      if (unverifiedRoleId) {
         try {
           const botClient = message.client;
           const guild = botClient.guilds.cache.get(message.guildId);
           if (guild) {
             const spammerMember = await guild.members.fetch(message.author.id);
             if (spammerMember) {
-              const currentRoles = spammerMember.roles.cache.filter(
-                (role) => role.id !== message.guildId
-              ).keyArray();
+              const currentRoles = spammerMember.roles.cache
+                .filter((role) => role.id !== message.guildId)
+                .keyArray();
               if (currentRoles.length > 0) {
-                await spammerMember.roles.remove(currentRoles).catch(console.error);
+                await spammerMember.roles
+                  .remove(currentRoles)
+                  .catch(console.error);
               }
-              await spammerMember.roles.add(unverifiedRoleId).catch(console.error);
-              console.log(`🔒 Roles removidos y rol "Sin Verificar" asignado a ${message.author.tag}`);
+              await spammerMember.roles
+                .add(unverifiedRoleId)
+                .catch(console.error);
+              console.log(
+                `🔒 Roles removidos y rol "Sin Verificar" asignado a ${message.author.tag}`
+              );
             }
           }
         } catch (err) {
@@ -95,55 +100,56 @@ export async function onMessageCreate(message) {
       }
 
       if (process.env.CHANNEL_ID_ADMINS) {
-      try {
-        const adminChannel = await message.client.channels.fetch(
-          process.env.CHANNEL_ID_ADMINS
-        );
-        if (adminChannel && adminChannel.isTextBased()) {
-          await adminChannel.send({
-            embeds: [
-              new EmbedBuilder()
-                .setTitle("🚫 Ataque de spam detectado")
-                .setColor("#FF0000")
-                .addFields(
-                  { name: "User", value: `@${message.author.tag}` },
-                  {
-                    name: "Cantidad de mensajes detectados",
-                    value: `${userSpamInstances.length}`,
-                  },
-                  { name: "Eliminados", value: `${deletedCount}` },
-                  {
-                    name: "Contenido repetido",
-                    value: `\`\`\`${message.content}\`\`\``,
-                  }
-                )
-                .setTimestamp(),
-            ],
-          });
+        try {
+          const adminChannel = await message.client.channels.fetch(
+            process.env.CHANNEL_ID_ADMINS
+          );
+          if (adminChannel && adminChannel.isTextBased()) {
+            await adminChannel.send({
+              embeds: [
+                new EmbedBuilder()
+                  .setTitle("🚫 Ataque de spam detectado")
+                  .setColor("#FF0000")
+                  .addFields(
+                    { name: "User", value: `@${message.author.tag}` },
+                    {
+                      name: "Cantidad de mensajes detectados",
+                      value: `${userSpamInstances.length}`
+                    },
+                    { name: "Eliminados", value: `${deletedCount}` },
+                    {
+                      name: "Contenido repetido",
+                      value: `\`\`\`${message.content}\`\`\``
+                    }
+                  )
+                  .setTimestamp()
+              ]
+            });
+          }
+        } catch (err) {
+          console.error(
+            "❌ No se pudo notificar al canal de admins:",
+            err.message
+          );
         }
-      } catch (err) {
-        console.error(
-          "❌ No se pudo notificar al canal de admins:",
-          err.message
-        );
+        for (const msgData of userSpamInstances) {
+          msgData.notified = true;
+        }
       }
-      for (const msgData of userSpamInstances) {
-        msgData.notified = true;
-      }
-    }
 
-    if (failedDeletions.length === 0) {
-      console.log(
-        `🚫 Mensajes de spam detectados y eliminados de ${message.author.tag}: "${message.content}"`
-      );
-    } else {
-      console.log(
-        `🚫 Spam detectado de ${message.author.tag}. Se eliminaron ${deletedCount} mensajes, ${failedDeletions.length} no se pudieron eliminar.`
-      );
-      for (const fail of failedDeletions) {
-        console.warn(
-          `⚠️ No se pudo eliminar mensaje (${fail.messageId}) en canal (${fail.channel}): ${fail.error}`
+      if (failedDeletions.length === 0) {
+        console.log(
+          `🚫 Mensajes de spam detectados y eliminados de ${message.author.tag}: "${message.content}"`
         );
+      } else {
+        console.log(
+          `🚫 Spam detectado de ${message.author.tag}. Se eliminaron ${deletedCount} mensajes, ${failedDeletions.length} no se pudieron eliminar.`
+        );
+        for (const fail of failedDeletions) {
+          console.warn(
+            `⚠️ No se pudo eliminar mensaje (${fail.messageId}) en canal (${fail.channel}): ${fail.error}`
+          );
+        }
       }
     }
   }
