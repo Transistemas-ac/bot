@@ -9,7 +9,6 @@ export const client = new Client({
     GatewayIntentBits.DirectMessages,
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
-  makeCache: (manager) => manager.memoizeData(),
   sweepers: {
     guilds: {
       interval: 300,
