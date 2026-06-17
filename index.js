@@ -6,7 +6,7 @@ import { registerEvents } from "./src/events/index.js";
 import { registerAllCommands } from "./src/utils/commandRegistry.js";
 import { handleInteraction } from "./src/handlers/interactionHandler.js";
 
-client.once("ready", async () => {
+client.once("clientReady", async () => {
   console.log(`🚀 ${client.user.tag} está en línea!`);
 
   await registerAllCommands(client);

@@ -1,6 +1,6 @@
 # 🐱 Transis Bot
 
-Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la bienvenida de nueves miembres, la auto-asignación de roles y la moderación de contenido.
+Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la auto-asignación de roles y la moderación de contenido.
 
 <br>
 
@@ -8,15 +8,15 @@ Este bot de Discord está diseñado para automatizar y mejorar la gestión de nu
 
 Este bot ofrece una serie de características clave para mantener nuestra comunidad organizada y segura:
 
-- **👋 Bienvenida Automatizada**: Al unirse un nuevo miembro, el bot lo saluda automáticamente en el canal de bienvenida (`#bienvenida`), proporcionándole instrucciones claras sobre cómo obtener acceso completo al servidor.
+- **💬 Hablar**: El bot responde con el mensaje enviado al usar el comando `/talk`.
 
-- **🔒 Sistema de Verificación de Reglas**: Los nuevos usuarios deben leer y aceptar las reglas del servidor reaccionando a un mensaje específico en el canal de reglas (`#reglas`). Hasta que lo hagan, se les asigna un rol de "no verificade" (`unverified`) con acceso limitado.
+- **🏓 Ping Pong**: Al usar el comando `/ping` el bot responde con `pong`.
 
-- **🎭 Auto-Asignación de Roles**: En el canal de roles (`#roles`), los miembros pueden seleccionar y asignarse roles por sí mismos reaccionando a un mensaje interactivo, lo que permite una personalización rápida y sencilla de su perfil.
+- **🎭 Auto-Asignación de Roles**: En el canal de roles (`#roles`), los miembros pueden seleccionar y asignarse roles de pronombres y habilidades por sí mismos reaccionando a los mensajes interactivos, lo que permite una personalización rápida y sencilla de su perfil.
 
 - **🚫 Detección y Eliminación de Spam**: Identifica y elimina mensajes idénticos enviados en un corto período de tiempo por un mismo usuarie en múltiples canales.
 
-- **🔗 Generación de invitaciones personalizadas para Estudiantes**: El comando `/invitar`, disponible únicamente para admins, envía una petición a <a href="https://github.com/Transistemas-ac/ds-invite">un worker interno</a> que devuelve una URL de invitación al servidor en la que se puede auto-asignar el rol de Estudiante.
+- **🔗 Generación de invitaciones personalizadas**: El comando `/invitar`, disponible únicamente para admins, envía una petición a <a href="https://github.com/Transistemas-ac/ds-invite">un worker interno</a> que devuelve una URL de invitación al servidor.
 
 <br>
 
@@ -52,14 +52,10 @@ Para que el bot funcione correctamente, necesitas configurar las siguientes vari
 BOT_TOKEN
 
 # IDs de los canales de Discord
-CHANNEL_ID_BIENVENIDA
 CHANNEL_ID_REGLAS
 CHANNEL_ID_PRESENTACION
 CHANNEL_ID_ROLES
 CHANNEL_ID_ADMINS
-
-# ID del rol que se asigna a los usuaries no verificades (si aplica)
-ROLE_ID_UNVERIFIED=ID_DEL_ROL_NO_VERIFICADO
 
 # IDs de los roles para auto-asignación
 ROLE_ID_ESTUDIANTE
@@ -69,7 +65,8 @@ ROLE_ID_COMUNIDAD
 
 # IDs de mensajes persistentes (se guardan automáticamente la primera vez que el bot los crea)
 # No necesitas establecer estos valores manualmente al inicio, el bot los generará.
-MESSAGE_ID_ROLES
+MESSAGE_ID_ROLES_PRONOMBRES
+MESSAGE_ID_ROLES_HABILIDADES
 MESSAGE_ID_REGLAS
 
 ```
