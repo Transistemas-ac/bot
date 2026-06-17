@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node index.js --env-file=.env --watch",
-    "start": "node index.js --watch"
+    "start": "node --max-old-space-size=256 index.js"
   },
   "repository": {
     "type": "git",
