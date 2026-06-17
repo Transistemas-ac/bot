@@ -25,15 +25,19 @@ async function handleReaction(reaction, user, isAdding) {
     const roleName = role ? role.name : roleId;
 
     if (isAdding) {
-      await member.roles.add(roleId).catch(console.error);
-      console.log(
-        `➕ Rol ${reaction.emoji.name} ${roleName} añadido a ${user.tag}.`
-      );
+      if (!member.roles.cache.has(roleId)) {
+        await member.roles.add(roleId).catch(console.error);
+        console.log(
+          `➕ Rol ${reaction.emoji.name} ${roleName} añadido a ${user.tag}.`
+        );
+      }
     } else {
-      await member.roles.remove(roleId).catch(console.error);
-      console.log(
-        `➖ Rol ${reaction.emoji.name} ${roleName} removido de ${user.tag}.`
-      );
+      if (member.roles.cache.has(roleId)) {
+        await member.roles.remove(roleId).catch(console.error);
+        console.log(
+          `➖ Rol ${reaction.emoji.name} ${roleName} removido de ${user.tag}.`
+        );
+      }
     }
     return;
   }
@@ -46,15 +50,19 @@ async function handleReaction(reaction, user, isAdding) {
     const roleName = role ? role.name : roleId;
 
     if (isAdding) {
-      await member.roles.add(roleId).catch(console.error);
-      console.log(
-        `➕ Rol ${reaction.emoji.name} ${roleName} añadido a ${user.tag}.`
-      );
+      if (!member.roles.cache.has(roleId)) {
+        await member.roles.add(roleId).catch(console.error);
+        console.log(
+          `➕ Rol ${reaction.emoji.name} ${roleName} añadido a ${user.tag}.`
+        );
+      }
     } else {
-      await member.roles.remove(roleId).catch(console.error);
-      console.log(
-        `➖ Rol ${reaction.emoji.name} ${roleName} removido de ${user.tag}.`
-      );
+      if (member.roles.cache.has(roleId)) {
+        await member.roles.remove(roleId).catch(console.error);
+        console.log(
+          `➖ Rol ${reaction.emoji.name} ${roleName} removido de ${user.tag}.`
+        );
+      }
     }
     return;
   }
@@ -63,36 +71,7 @@ async function handleReaction(reaction, user, isAdding) {
     reaction.message.id === MESSAGE_ID_REGLAS &&
     reaction.emoji.name === VERIFICATION_EMOJI
   ) {
-    const unverifiedRole = member.guild.roles.cache.get(
-      process.env.ROLE_ID_UNVERIFIED
-    );
-    const comunidadRole = member.guild.roles.cache.get(
-      process.env.ROLE_ID_COMUNIDAD
-    );
-
-    if (isAdding) {
-      if (unverifiedRole && member.roles.cache.has(unverifiedRole.id)) {
-        await member.roles.remove(unverifiedRole).catch(console.error);
-        console.log(`🔓 Rol ${unverifiedRole.name} removido de ${user.tag}.`);
-      }
-      if (comunidadRole && !member.roles.cache.has(comunidadRole.id)) {
-        await member.roles.add(comunidadRole).catch(console.error);
-        console.log(
-          `✅ Rol ${comunidadRole.name} añadido a ${user.tag} por verificación de reglas.`
-        );
-      }
-    } else {
-      if (comunidadRole && member.roles.cache.has(comunidadRole.id)) {
-        await member.roles.remove(comunidadRole).catch(console.error);
-        console.log(`❌ Rol ${comunidadRole.name} removido de ${user.tag}.`);
-      }
-      if (unverifiedRole && !member.roles.cache.has(unverifiedRole.id)) {
-        await member.roles.add(unverifiedRole).catch(console.error);
-        console.log(
-          `🔒 Rol ${unverifiedRole.name} añadido de nuevo a ${user.tag}.`
-        );
-      }
-    }
+    return;
   }
 }
 
