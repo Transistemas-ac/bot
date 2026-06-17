@@ -9,26 +9,4 @@ export const client = new Client({
     GatewayIntentBits.DirectMessages,
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
-  sweepers: {
-    guilds: {
-      interval: 300,
-      filter: () => true,
-    },
-    channels: {
-      interval: 300,
-      filter: () => true,
-    },
-    roles: {
-      interval: 300,
-      filter: () => true,
-    },
-    users: {
-      interval: 300,
-      filter: () => true,
-    },
-    messages: {
-      interval: 60,
-      filter: (m) => m.age > 30,
-    },
-  },
 });
