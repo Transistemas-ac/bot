@@ -1,6 +1,6 @@
-# 🐱 Transis Bot
+# 🐱 Transistemas Bot
 
-Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la auto-asignación de roles y la moderación de contenido.
+Este bot de Discord está diseñado para automatizar y mejorar la gestión de nuestra comunidad, ofreciendo herramientas para la auto-asignación de roles, la moderación de contenido y más.
 
 <br>
 
@@ -27,8 +27,8 @@ Seguí estos pasos para desplegar y ejecutar el bot:
 ### 1️⃣ Clonar el Repositorio
 
 ```bash
-git clone https://github.com/Transistemas-ac/discord-bot/
-cd discord-bot
+git clone https://github.com/Transistemas-ac/bot/
+cd bot
 ```
 
 <br>
