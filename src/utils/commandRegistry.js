@@ -9,7 +9,7 @@ export async function registerAllCommands(client) {
   for (const [id, guild] of client.guilds.cache) {
     try {
       await rest.put(
-        Routes.applicationGuildCommands(process.env.CLIENT_ID, id),
+        Routes.applicationGuildCommands(client.user.id, id),
         { body: commandsData }
       );
       console.log(`✅ Comandos registrados en ${guild.name}`);
