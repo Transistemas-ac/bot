@@ -3,6 +3,7 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  PermissionsBitField,
 } from "discord.js";
 
 export const inviteCommand = {
@@ -19,14 +20,16 @@ export const inviteCommand = {
     ),
 
   async execute(interaction) {
-    const adminRoleId = process.env.ROLE_ID_ADMIN;
     const member = interaction.member;
+    const isAdmin =
+      member?.permissions?.has(PermissionsBitField.Flags.Administrator) ||
+      (process.env.ROLE_ID_ADMIN &&
+        member?.roles?.cache?.has(process.env.ROLE_ID_ADMIN));
 
-    // Validación de permisos
-    if (!member || !member.roles || !member.roles.cache.has(adminRoleId)) {
+    if (!isAdmin) {
       await interaction.reply({
         content: "❌ Solo admins pueden usar este comando.",
-        flags: 64, // ephemeral
+        flags: 64,
       });
       return;
     }
