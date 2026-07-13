@@ -1,0 +1,16 @@
+.git
+.gitignore
+.github
+.vscode
+node_modules
+npm-debug.log*
+pnpm-lock.yaml
+yarn.lock
+*.log
+.DS_Store
+.env
+.env.*
+discloud
+discloud.config
+README.md
+docs

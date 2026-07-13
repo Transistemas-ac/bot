@@ -96,4 +96,83 @@ Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos caso
 
 ---
 
+## 🐳 Deploy con Docker Compose (VPS Debian 13)
+
+Esta sección describe cómo correr el bot en un VPS con Debian 13 ("Trixie") usando Docker y Docker Compose. El bot solo hace conexiones salientes (gateway de Discord + `https://ds.transistemas.org/hash`), por lo que **no necesita puertos abiertos**.
+
+### 1️⃣ Instalar Docker en el VPS
+
+```bash
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+(Opcional) usar Docker sin `sudo`:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### 2️⃣ Clonar el repositorio y configurar el `.env`
+
+```bash
+git clone https://github.com/Transistemas-ac/bot.git
+cd bot
+cp compose.example.env .env
+nano .env   # completar BOT_TOKEN, CHANNEL_ID_*, ROLE_ID_*, MESSAGE_ID_*
+```
+
+> Alternativa: copiá tu `.env` local con `scp .env usuario@IP:/ruta/al/repo/.env`.
+
+### 3️⃣ Construir y levantar
+
+```bash
+docker compose up -d --build
+docker compose logs -f bot
+```
+
+Deberías ver `🚀 ... está en línea!`. Salí de los logs con `Ctrl+C` (el contenedor sigue corriendo).
+
+### 4️⃣ Comandos útiles
+
+| Acción | Comando |
+| --- | --- |
+| Ver logs en vivo | `docker compose logs -f bot` |
+| Reiniciar el bot | `docker compose restart bot` |
+| Detener el bot | `docker compose down` |
+| Reconstruir tras cambios | `docker compose up -d --build` |
+| Estado del contenedor | `docker compose ps` |
+| Entrar al contenedor | `docker compose exec bot sh` |
+| Limpiar imagen vieja | `docker image prune -f` |
+
+### 5️⃣ Actualizar el bot
+
+```bash
+cd bot
+git pull
+docker compose up -d --build
+```
+
+### Notas
+
+- El contenedor se reinicia solo si crashea (`restart: unless-stopped`).
+- `dumb-init` se usa como PID 1 para que `docker stop` envíe `SIGTERM` y tu handler en `index.js:27` haga un apagado limpio.
+- Logs en JSON rotados a 10 MB × 3 archivos para no llenar el disco.
+- Heap de V8 limitado a 256 MB (igual que `npm start`).
+- El archivo `.env` real nunca se copia dentro de la imagen (ver `.dockerignore`).
+
+---
+
 🌈 Creado con orgullo por el Equipo de Desarrollo de Transistemas ♥
