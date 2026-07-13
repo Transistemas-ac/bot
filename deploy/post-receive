@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Auto-deploy hook para el bot de Transistemas.
+# Se ejecuta en cada push a este bare repo: hace checkout del branch
+# pusheado en el working tree hermano y reconstruye la imagen Docker.
+
+set -euo pipefail
+
+REPO_DIR="$(cd "$(dirname "$(dirname "$0")")" && pwd)"
+WORK_TREE="${REPO_DIR%.git}"
+
+read -r OLD_REV NEW_REV REFNAME
+
+if [ -z "$NEW_REV" ]; then
+  echo "==> Branch $REFNAME eliminado, nada que desplegar."
+  exit 0
+fi
+
+echo "==> Desplegando $REFNAME -> $NEW_REV en $WORK_TREE"
+git --git-dir="$REPO_DIR" --work-tree="$WORK_TREE" checkout -f "$REFNAME"
+git --git-dir="$REPO_DIR" --work-tree="$WORK_TREE" reset --hard "$NEW_REV"
+
+cd "$WORK_TREE"
+
+echo "==> Ejecutando docker compose up -d --build"
+docker compose up -d --build
+
+echo "✅ Deploy terminado."

@@ -96,6 +96,86 @@ Opciones más avanzadas incluyen servicios cloud o self-hosting. Para estos caso
 
 ---
 
+## 🚀 Auto-deploy con `git push` (VPS Debian 13)
+
+Si querés que el bot se redespliegue solo cada vez que hacés `git push` desde tu PC, configurá un bare repo en el VPS con un hook `post-receive`. No agrega servicios externos ni cron.
+
+### 1️⃣ Setup único en el VPS
+
+Desde la PC, primero commiteá los archivos de deploy (incluido este README):
+
+```bash
+git add deploy/ README.md
+git commit -m "Add auto-deploy hook"
+```
+
+Después, en el VPS, cloná el repo de la forma normal y corré el script de setup una vez:
+
+```bash
+git clone https://github.com/Transistemas-ac/bot.git ~/bot
+cd ~/bot
+bash deploy/setup-vps.sh
+```
+
+El script:
+
+- Crea `~/bot.git` (bare repo receptor de pushes).
+- Crea `~/bot` como working tree (clonado del bare).
+- Instala el hook `post-receive` ejecutable en `~/bot.git/hooks/`.
+
+> Si en lugar de `~/bot` usás otra ruta o nombre de carpeta, editá las variables `REPO_NAME` y `REPO_DIR` al inicio de `deploy/setup-vps.sh` antes de correrlo.
+
+### 2️⃣ Deploy inicial en el VPS
+
+```bash
+cd ~/bot
+cp compose.example.env .env
+nano .env            # completar BOT_TOKEN, CHANNEL_ID_*, ROLE_ID_*, MESSAGE_ID_*
+docker compose up -d --build
+docker compose logs -f bot
+```
+
+Deberías ver `🚀 ... está en línea!`.
+
+### 3️⃣ Agregá el VPS como remote en tu PC
+
+```bash
+git remote add vps usuario@IP:bot.git
+```
+
+### 4️⃣ Deploys siguientes
+
+```bash
+git push vps main
+```
+
+El push dispara el hook, que:
+
+1. Hace checkout del branch pusheado en `~/bot`.
+2. Corre `docker compose up -d --build`.
+
+Vas a ver el output de `docker compose` directamente en tu terminal durante el push. Si algo falla, el push se aborta con el error.
+
+### ¿Cómo cambio la ruta por defecto?
+
+Por defecto el hook asume:
+
+- Bare repo: `~/bot.git`
+- Working tree: `~/bot`
+
+Si las movés, editá la primera línea útil de `deploy/post-receive` (la derivación de `REPO_DIR` y `WORK_TREE`) o reemplazá esas dos variables por paths absolutos.
+
+### ¿Y si el push falla con "dubious ownership"?
+
+Significa que el usuario que hace `git push` no es el mismo que owns `~/bot` y `~/bot.git`. Solucionalo en el VPS con:
+
+```bash
+git config --global --add safe.directory /home/TU_USUARIO/bot
+git config --global --add safe.directory /home/TU_USUARIO/bot.git
+```
+
+---
+
 ## 🐳 Deploy con Docker Compose (VPS Debian 13)
 
 Esta sección describe cómo correr el bot en un VPS con Debian 13 ("Trixie") usando Docker y Docker Compose. El bot solo hace conexiones salientes (gateway de Discord + `https://ds.transistemas.org/hash`), por lo que **no necesita puertos abiertos**.
