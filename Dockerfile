@@ -18,10 +18,10 @@ RUN apt-get update \
 ENV NODE_ENV=production \
     NPM_CONFIG_UPDATE_NOTIFIER=false
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY package.json package-lock.json ./
-COPY index.js ./
-COPY src ./src
+COPY --from=deps --chown=node:node /app/node_modules ./node_modules
+COPY --chown=node:node package.json package-lock.json ./
+COPY --chown=node:node index.js ./
+COPY --chown=node:node src ./src
 
 USER node
 
